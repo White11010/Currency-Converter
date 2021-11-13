@@ -1,4 +1,5 @@
-Источник данных о текущем курсе валют - https://www.cbr-xml-daily.ru/daily_json.js
+currency API - https://www.cbr-xml-daily.ru/daily_json.js
+Desctop only.
 
 # vue-currency-converter
 
