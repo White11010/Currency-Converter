@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <cc-main-wrapper/>
+    <cc-main-wrapper />
   </div>
 </template>
 
 <script>
-  import ccMainWrapper from "./components/cc-main-wrapper.vue"
+import ccMainWrapper from "./components/cc-main-wrapper.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     ccMainWrapper,
   },
-  data() {
-    
-  },
-}
+  data() {},
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
