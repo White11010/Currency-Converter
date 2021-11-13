@@ -1,3 +1,5 @@
+Источник данных о текущем курсе валют - https://www.cbr-xml-daily.ru/daily_json.js
+
 # vue-currency-converter
 
 ## Project setup
