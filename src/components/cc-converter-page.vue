@@ -14,7 +14,7 @@
             }"
             @click="
               setFirstActiveCurrency(currency);
-              secondInputCalc();
+              firstInputCalc();
             "
           >
             {{ currency }}
@@ -41,7 +41,10 @@
             >
               <p
                 class="list__code"
-                @click="setFirstOptionalCurrency(currency.CharCode)"
+                @click="
+                  setFirstOptionalCurrency(currency.CharCode);
+                  firstInputCalc();
+                "
               >
                 {{ currency.CharCode }}
               </p>
@@ -110,7 +113,10 @@
             >
               <p
                 class="list__code"
-                @click="setSecondOptionalCurrency(currency.CharCode)"
+                @click="
+                  setSecondOptionalCurrency(currency.CharCode);
+                  firstInputCalc();
+                "
               >
                 {{ currency.CharCode }}
               </p>
@@ -379,7 +385,7 @@ export default {
 }
 .calc__input-area {
   min-height: 8rem;
-  height: 20rem;
+  height: 15rem;
   width: 100%;
   border-radius: 0.5rem;
   border: 1px solid rgb(100, 100, 100);
