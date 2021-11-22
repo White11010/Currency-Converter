@@ -1,9 +1,9 @@
 <template>
   <div class="cc-currencies-page">
     <div class="cc-currencies-page__choose-menu">
-      <p class="cc-currencies-page__base-currency">
-        Base currency: {{ baseCurrency }}
-      </p>
+      <h3 class="cc-currencies-page__base-currency">
+        Base currency: {{ this.BASE_CURRENCY }}
+      </h3>
       <button
         class="cc-currencies-page__choose-button"
         @click="isSelectVisible = !isSelectVisible"
@@ -16,33 +16,26 @@
       >
         <div
           class="currencies-list__item"
-          v-for="(currencyData, currencyKey) in this.VALUTES"
+          v-for="(currencyData, currencyKey) in this.CURRENCIES_WITHOUT_BASE"
           :key="currencyKey"
-          @click="baseCurrency = this.VALUTES[currencyKey].CharCode"
+          @click="changeBaseCurrency(currencyData.CharCode)"
         >
           {{ this.VALUTES[currencyKey].CharCode }}
         </div>
-        <div class="currencies-list__item" @click="baseCurrency = 'RUB'">
-          RUB
-        </div>
       </div>
     </div>
-    <div class="cc-currencies-page__currency-list">
+    <div class="cc-currencies-page__rates-list rates-list">
       <div
-        class="cc-currencies-page__currency"
-        v-for="(currencyData, currencyKey) in this.VALUTES"
+        class="rates-list__item"
+        v-for="(currencyData, currencyKey) in this.CURRENCIES_WITHOUT_BASE"
         :key="currencyKey"
       >
-        <p v-if="baseCurrency == 'RUB'" class="currency-list__item">
-          <span>{{ this.VALUTES[currencyKey].CharCode }}</span
-          ><span>{{ this.VALUTES[currencyKey].Value }}</span>
-        </p>
-        <p v-else class="currency-list__item">
+        <p class="currency-list__item">
           <span>{{ this.VALUTES[currencyKey].CharCode }}</span
           ><span>{{
             (
-              this.VALUTES[this.baseCurrency].Value /
-              this.VALUTES[currencyKey].Value
+              this.VALUTES[currencyKey].Value /
+              this.VALUTES[this.BASE_CURRENCY].Value
             ).toFixed(5)
           }}</span>
         </p>
@@ -59,28 +52,20 @@ export default {
   data() {
     return {
       isSelectVisible: false,
-      baseCurrency: "",
+      // baseCurrency: 'RUB'
     };
   },
   computed: {
-    ...mapGetters(["VALUTES"]),
+    ...mapGetters(["VALUTES", "CURRENCIES_WITHOUT_BASE", "BASE_CURRENCY"]),
   },
   methods: {
-    ...mapActions(["GET_CURRENCIES_FROM_API"]),
-    getDefaultCurrency() {
-      let userLang = (
-        navigator.language ||
-        navigator.userLanguage ||
-        navigator.systemLanguage
-      ).substr(0, 2);
-      userLang == "ru"
-        ? (this.baseCurrency = "RUB")
-        : (this.baseCurrency = "USD");
+    ...mapActions(["GET_CURRENCIES_FROM_API", "CHANGE_BASE_CURRENCY"]),
+    changeBaseCurrency(currency) {
+      this.CHANGE_BASE_CURRENCY(currency);
     },
   },
   created() {
     this.GET_CURRENCIES_FROM_API();
-    this.getDefaultCurrency();
     document.onclick = (e) => {
       if (e.target.className != "cc-currencies-page__choose-button")
         this.isSelectVisible = false;
@@ -97,6 +82,7 @@ export default {
 }
 .cc-currencies-page__base-currency {
   font-size: 1.2rem;
+  font-weight: 600;
   padding: 1.5rem;
 }
 .cc-currencies-page__choose-menu {
@@ -106,7 +92,7 @@ export default {
 }
 .cc-currencies-page__currencies-list {
   position: absolute;
-  bottom: -238px;
+  top: 4rem;
   right: -50%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -114,6 +100,7 @@ export default {
   background-color: rgb(69, 180, 134);
   color: white;
   padding: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 .currencies-list__item {
   cursor: pointer;
@@ -121,7 +108,7 @@ export default {
 .cc-currencies-page__choose-button {
   font-size: 1.2rem;
   box-sizing: border-box;
-  padding: 0.25rem;
+  padding: 0.5rem;
   background-color: rgb(69, 180, 134);
   border: none;
   color: white;
@@ -131,13 +118,13 @@ export default {
 .cc-currencies-page__choose-button:hover {
   box-shadow: 0 0 0.5rem rgba(69, 180, 134, 0.9);
 }
-.cc-currencies-page__currency {
+.rates-list__item {
   width: 9rem;
   display: flex;
   justify-content: space-between;
 }
-.cc-currencies-page__currency-list {
-  padding-top: 2rem;
+.cc-currencies-page__rates-list {
+  padding: 2rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem 10rem;
@@ -146,5 +133,20 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 576px) {
+  .cc-currencies-page__rates-list {
+    box-sizing: border-box;
+    width: 100%;
+    gap: 1rem 22vw;
+  }
+  .rates-list__item {
+    margin: 0 auto;
+  }
+  .cc-currencies-page__currencies-list {
+    grid-template-columns: repeat(4, 1fr);
+    right: 0 !important;
+  }
 }
 </style>

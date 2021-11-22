@@ -54,3 +54,20 @@ html, body, #app{
 a{
 	text-decoration: none;
 }
+
+/*Media queries*/
+@media screen and (max-width: 1440px) {
+	html {
+		font-size: .9rem;
+	}	
+}
+@media screen and (max-width: 992px) {
+	html {
+		font-size: .8rem;
+	}
+}
+@media screen and (max-width: 576px) {
+	html {
+		font-size: .7rem;
+	}
+}

@@ -14,16 +14,18 @@
 <script>
 export default {
   name: "cc-header",
-  data() {
-    return {};
-  },
+  // data() {
+  //     return{
+
+  //     }
+  // },
 };
 </script>
 
 <style>
 .cc-header {
   width: 100%;
-  height: 80px;
+  height: 5rem;
   text-transform: uppercase;
 }
 .cc-header__nav {
